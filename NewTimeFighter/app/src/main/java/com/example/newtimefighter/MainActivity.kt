@@ -51,12 +51,6 @@ class MainActivity : AppCompatActivity() {
         gameStarted = false
     }
 
-    private fun initialSetup() {
-        gameScoreTextView.text = getString(R.string.yourScore, score)
-        timeLeftTextView.text = getString(R.string.timeLeft,timeLeft)
-        resetGame()
-    }
-
     private fun incrementScore() {
         score += 1
         val newScore = getString(R.string.yourScore, score)
