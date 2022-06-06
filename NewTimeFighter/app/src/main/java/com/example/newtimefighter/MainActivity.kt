@@ -1,8 +1,10 @@
 package com.example.newtimefighter
 
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -21,9 +23,17 @@ class MainActivity : AppCompatActivity() {
     internal val initialCountDown: Long = 10000
     internal var countDownInterval: Long = 1000
 
+    companion object {
+        private val TAG = MainActivity::class.java.simpleName
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        Log.d(TAG, "onCreate Called. Score is: $score")
+
         tapMeButton = findViewById(R.id.tapMeButton)
         gameScoreTextView = findViewById(R.id.yourScore)
         timeLeftTextView = findViewById(R.id.timeLeft)
