@@ -69,5 +69,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun endGame() {
         Toast.makeText(this, getString(R.string.gameOverMessage,score), Toast.LENGTH_LONG).show()
+        resetGame()
     }
 }
