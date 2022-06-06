@@ -22,18 +22,19 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var countDownTimer: CountDownTimer
     internal val initialCountDown: Long = 10000
     internal var countDownInterval: Long = 1000
+    internal var timeLeftOnTimer: Long = 10000
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName
+        private const val SCORE_KEY = "SCORE_KEY"
+        private const val TIME_LEFT_KEY = "TIME_LEFT_KEY"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
         Log.d(TAG, "onCreate Called. Score is: $score")
-
         tapMeButton = findViewById(R.id.tapMeButton)
         gameScoreTextView = findViewById(R.id.yourScore)
         timeLeftTextView = findViewById(R.id.timeLeft)
@@ -42,6 +43,20 @@ class MainActivity : AppCompatActivity() {
         tapMeButton.setOnClickListener { view ->
             incrementScore()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(SCORE_KEY,score)
+        outState.putLong(TIME_LEFT_KEY,timeLeftOnTimer)
+        countDownTimer.cancel()
+
+        Log.d(TAG, "onSaveInstanceState: Saving Score: $score & Time Left: $timeLeftOnTimer" )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "On Destroy Called")
     }
 
     private fun resetGame() {
@@ -53,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
         countDownTimer = object : CountDownTimer(initialCountDown,countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
+                timeLeftOnTimer = millisUntilFinished
                 val timeLeft = millisUntilFinished / 1000
                 timeLeftTextView.text = getString(R.string.timeLeft, timeLeft)
             }
